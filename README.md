@@ -19,11 +19,11 @@ oci setup config
 
 
 ## 変更されるポイント
-- bastion
--- /etc/ansible/hosts
-- BM.HPC2.36
--- /etc/hosts
--- hostname
+### bastion
+- /etc/ansible/hosts
+### BM.HPC2.36
+- /etc/hosts
+- hostname
 
 ## 実行方法 
 
