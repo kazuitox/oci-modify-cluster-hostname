@@ -1,6 +1,6 @@
 #!/bin/sh
-subnet_id=
-compartment_id=
+subnet_id=ocid1.subnet.oc1.iad.aaaaaaaa3sgq52nbdfkak56olknnqq4cw6cvxegwlqgohtgbaoqvgubaoe4a
+compartment_id=ocid1.compartment.oc1..aaaaaaaagv7rzed6x5opsigumss6xs5prv57oryn52b546uuhchbrnsvdrwa
 
 test -f ./hostlist  && /bin/rm ./hostlist
 test -f ./hosts.tmp  && /bin/rm ./hosts.tmp
@@ -51,7 +51,7 @@ do
 
  ## change Instance Display Name
  INSTANCE_ID=$(oci compute instance list --compartment-id ${compartment_id} --display-name ${OLD_HOSTNAME} --query 'data[0]."id"' --raw-output)
- oci compute instance update  --instance-id ${INSTANCE_ID} ${NEW_HOSTNAME}
+ oci compute instance update  --instance-id ${INSTANCE_ID} --display-name ${NEW_HOSTNAME}
 
  ## change FQDN of Private IP and VNIC Display Name
  VNIC_ID=$(oci network private-ip list --subnet-id ${subnet_id} --ip-address ${MGMT_IP}  --query 'data[0]."vnic-id"' --raw-output)
@@ -61,12 +61,12 @@ do
 done
 
 ## Replace /etc/hosts and hostfile.* file
-cat ./hosts.tmp | grep -v rdma | while read line
+for line in `cat ./hosts.new | grep -v rdma | sed 's|\t|,|g' | sed 's| |,|g'`
 do
-
- IP=`echo $line | awk '{print $1}'`
- HOSTNAME=`echo $line | awk '{print $2}'`
- HOSTNAMES=`echo $line | awk '{print $2" "$3}'`
+ echo $line
+ IP=`echo $line | awk -F, '{print $1}'`
+ HOSTNAME=`echo $line | awk -F, '{print $2}'`
+ HOSTNAMES=`echo $line | awk -F, '{print $2" "$3}'`
  echo -e "127.0.0.1\tlocalhost localhost.localdomain localhost4 localhost4.localdomain4" > ./hosts.${HOSTNAME}
  echo -e "::1\t\tlocalhost localhost.localdomain localhost6 localhost6.localdomain6" >> ./hosts.${HOSTNAME}
  echo -e "${IP}\t${HOSTNAMES}" >> ./hosts.${HOSTNAME}
