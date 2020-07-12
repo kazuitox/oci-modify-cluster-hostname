@@ -4,7 +4,7 @@ OCI(Oracle Cloud Infrastructure) にて HPC 用途のクラスターを構築し
 それを任意のインスタンス名、ホスト名に変更するスクリプトです。
 
 ## 前提
-## 実行するノード
+### 実行するノード
 bastion ノードから実行してください。
 ### OCI CLI
 oci cli が bastion ノードにインストールされていること。
