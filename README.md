@@ -18,6 +18,15 @@ oci setup config
 ```
 
 
+## 変更されるポイント
+- bastion
+-- /etc/ansible/hosts
+- BM.HPC2.36
+-- /etc/hosts
+-- hostname
+
+## 実行方法 
+
 ## 注意事項
 ### Resource Manager から Destroy できなくなる
 インスタンス名が変わったのが影響していると思われる。手動で以下を行ってください。
