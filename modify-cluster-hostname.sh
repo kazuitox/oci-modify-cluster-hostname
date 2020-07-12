@@ -1,5 +1,6 @@
 #!/bin/sh
-subnet_id=ocid1.subnet.oc1.ap-tokyo-1.aaaaaaaassgevjqmc6edqotzoixu2h6fbcofgsipkm5jfdy2dkgsxvknolra
+subnet_id=
+compartment_id=
 
 test -f ./hostlist  && /bin/rm ./hostlist
 test -f ./hosts.tmp  && /bin/rm ./hosts.tmp
@@ -49,13 +50,13 @@ do
  echo "${NEW_HOSTNAME}.${DOMAIN}" >> hostfile.tcp
 
  ## change Instance Display Name
- #INSTANCE_ID=$(oci compute instance list --display-name ${OLD_HOSTNAME} --query 'data[0]."id"' --raw-output)
- #oci compute instance update --instance-id ${INSTANCE_ID} ${NEW_HOSTNAME}
+ INSTANCE_ID=$(oci compute instance list --compartment-id ${compartment_id} --display-name ${OLD_HOSTNAME} --query 'data[0]."id"' --raw-output)
+ oci compute instance update  --instance-id ${INSTANCE_ID} ${NEW_HOSTNAME}
 
  ## change FQDN of Private IP and VNIC Display Name
- #VNIC_ID=$(oci network private-ip list --subnet-id ${subnet_id} --ip-address ${MGMT_IP}  --query 'data[0]."vnic-id"' --raw-output)
- #oci network vnic update --vnic-id ${VNIC_ID} --hostname-label ${NEW_HOSTNAME}
- #oci network vnic update --vnic-id ${VNIC_ID} --display-name ${NEW_HOSTNAME}
+ VNIC_ID=$(oci network private-ip list --subnet-id ${subnet_id} --ip-address ${MGMT_IP}  --query 'data[0]."vnic-id"' --raw-output)
+ oci network vnic update --vnic-id ${VNIC_ID} --hostname-label ${NEW_HOSTNAME}
+ oci network vnic update --vnic-id ${VNIC_ID} --display-name ${NEW_HOSTNAME}
 
 done
 
