@@ -1,0 +1,6 @@
+- hosts: compute
+  sudo: yes
+  user: opc
+
+  tasks:
+    - hostname: name={{ inventory_hostname }}
