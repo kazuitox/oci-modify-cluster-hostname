@@ -1,4 +1,7 @@
 # oci-modify-cluster-hostname
+## 概要
+OCI(Oracle Cloud Infrastructure) にて HPC 用途のクラスターを構築した際、インスタンス名やホスト名がランダムに生成される。
+それを任意のインスタンス名、ホスト名に変更するスクリプトです。
 
 ## 前提
 ### OCI CLI
