@@ -1,5 +1,5 @@
 #!/bin/sh
-subnet_id=ocid1.subnet.oc1.iad.aaaaaaaa3c5ebjpsyf4kldsvwfad47xofdsuxug4g4o5w2oxupsz5mto35xa
+subnet_id=ocid1.subnet.oc1.iad.aaaaaaaavmuxyztggjzhjnvuxqtfndh4466rccuvf7fawmfxdkixupcjlitq
 compartment_id=ocid1.compartment.oc1..aaaaaaaagv7rzed6x5opsigumss6xs5prv57oryn52b546uuhchbrnsvdrwa
 
 test -f ./hostlist  && /bin/rm ./hostlist
@@ -50,7 +50,7 @@ do
  echo "${NEW_HOSTNAME}.${DOMAIN}" >> hostfile.tcp
 
  ## change Instance Display Name
- INSTANCE_ID=$(oci compute instance list --compartment-id ${compartment_id} --display-name ${OLD_HOSTNAME} --query 'data[0]."id"' --raw-output)
+ INSTANCE_ID=$(oci compute instance list --compartment-id ${compartment_id} --display-name ${OLD_HOSTNAME} --lifecycle-state RUNNING --query 'data[0]."id"' --raw-output)
  oci compute instance update  --instance-id ${INSTANCE_ID} --display-name ${NEW_HOSTNAME}
 
  ## change FQDN of Private IP and VNIC Display Name
@@ -71,6 +71,7 @@ do
  echo -e "::1\t\tlocalhost localhost.localdomain localhost6 localhost6.localdomain6" >> ./hosts.${HOSTNAME}
  echo -e "${IP}\t${HOSTNAMES}" >> ./hosts.${HOSTNAME}
  echo "# BEGIN ANSIBLE MANAGED BLOCK" >> ./hosts.${HOSTNAME}
+ grep `hostname` /etc/hosts |grep " bastion" | sed 's/  /\t/' >> ./hosts.${HOSTNAME}
  cat ./hosts.new >> ./hosts.${HOSTNAME}
  echo "# END ANSIBLE MANAGED BLOCK" >> ./hosts.${HOSTNAME}
  scp ./hosts.${HOSTNAME} ${IP}:/var/tmp/hosts
@@ -88,6 +89,15 @@ do
  done
 
 done
+
+## Replace /etc/hosts bastion
+sudo cp -p /etc/hosts /etc/hosts.org
+head -3 /etc/hosts > hosts.bastion
+echo "# BEGIN ANSIBLE MANAGED BLOCK" >> ./hosts.bastion
+grep `hostname` /etc/hosts |grep " bastion" | sed 's/  /\t/' >> ./hosts.bastion
+cat ./hosts.new >> ./hosts.bastion
+echo "# BEGIN ANSIBLE MANAGED BLOCK" >> ./hosts.bastion
+sudo cp ./hosts.bastion /etc/hosts
 
 ## Replace /etc/ansible/hosts file
 NFS_SERVER_ROW=`grep -n "\[nfs\]" /etc/ansible/hosts | awk -F: '{print $1+1}'`
