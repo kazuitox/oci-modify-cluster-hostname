@@ -1,6 +1,6 @@
 #!/bin/sh
-subnet_id=ocid1.subnet.oc1.iad.aaaaaaaavmuxyztggjzhjnvuxqtfndh4466rccuvf7fawmfxdkixupcjlitq
-compartment_id=ocid1.compartment.oc1..aaaaaaaagv7rzed6x5opsigumss6xs5prv57oryn52b546uuhchbrnsvdrwa
+subnet_id=
+compartment_id=
 
 test -f ./hostlist  && /bin/rm ./hostlist
 test -f ./hosts.tmp  && /bin/rm ./hosts.tmp
