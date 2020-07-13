@@ -1,6 +1,6 @@
 #!/bin/sh
-subnet_id=
-compartment_id=
+subnet_id=ocid1.subnet.oc1.iad.aaaaaaaa3c5ebjpsyf4kldsvwfad47xofdsuxug4g4o5w2oxupsz5mto35xa
+compartment_id=ocid1.compartment.oc1..aaaaaaaagv7rzed6x5opsigumss6xs5prv57oryn52b546uuhchbrnsvdrwa
 
 test -f ./hostlist  && /bin/rm ./hostlist
 test -f ./hosts.tmp  && /bin/rm ./hosts.tmp
@@ -60,7 +60,7 @@ do
 
 done
 
-## Replace /etc/hosts and hostfile.* file
+## Replace /etc/hosts and hostfile.* file of BM.HPC2.36 Instances
 for line in `cat ./hosts.new | grep -v rdma | sed 's|\t|,|g' | sed 's| |,|g'`
 do
  echo $line
@@ -76,6 +76,9 @@ do
  scp ./hosts.${HOSTNAME} ${IP}:/var/tmp/hosts
  ssh ${IP} sudo cp -p /etc/hosts /etc/hosts.org 
  ssh ${IP} sudo mv /var/tmp/hosts /etc/hosts
+
+ ssh ${IP} "(umask 166 && touch ~/.ssh/config)"
+ ssh ${IP} 'echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config'
 
  for file in hostfile.rdma hostfile.tcp
  do
