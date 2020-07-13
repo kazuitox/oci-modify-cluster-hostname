@@ -24,8 +24,13 @@ oci setup config
 ### bastion
 - /etc/ansible/hosts
 ### BM.HPC2.36
+- インスタンスの display-name
+- インスタンスの VNIC の display-name
+- インスタンスの VNIC の --hostname-label (FQDN)
 - /etc/hosts
 - hostname
+- /etc/opt/oci-hpc/hostfile.rdma
+- /etc/opt/oci-hpc/hostfile.tcp
 
 ## 実行方法 
 
