@@ -21,9 +21,9 @@ oci setup config
 
 
 ## このスクリプトによる変更される点
-### bastion
+### bastion インスタンス
 - /etc/ansible/hosts
-### BM.HPC2.36
+### BM.HPC2.36 インスタンス
 - インスタンスの display-name
 - インスタンスの VNIC の display-name
 - インスタンスの VNIC の --hostname-label (FQDN)
