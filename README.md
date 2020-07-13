@@ -22,7 +22,9 @@ oci setup config
 
 ## このスクリプトによる変更される点
 ### bastion インスタンス
+- /etc/hosts
 - /etc/ansible/hosts
+
 ### BM.HPC2.36 インスタンス
 - インスタンスの display-name
 - インスタンスの VNIC の display-name
@@ -31,6 +33,7 @@ oci setup config
 - hostname
 - /etc/opt/oci-hpc/hostfile.rdma
 - /etc/opt/oci-hpc/hostfile.tcp
+- /home/opc/.ssh/config
 
 ## 実行方法 
 スクリプトの以下を変更してください。
