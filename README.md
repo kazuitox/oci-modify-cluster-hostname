@@ -33,6 +33,21 @@ oci setup config
 - /etc/opt/oci-hpc/hostfile.tcp
 
 ## 実行方法 
+スクリプトの以下を変更してください。
+環境をデプロイしたコンパートメントの OCID を記入する。
+```
+compartment_id=
+```
+
+BM.HPC2.36 が所属している Private Subnet の OCID を記入する。
+```
+subnet_id=
+```
+
+スクリプトを実行。
+```
+./modify-cluster-hostname.sh
+```
 
 ## 注意事項
 ### Resource Manager から Destroy できなくなる
