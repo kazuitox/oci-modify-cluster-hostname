@@ -51,10 +51,3 @@ subnet_id=
 ```
 ./modify-cluster-hostname.sh
 ```
-
-## 注意事項
-### Resource Manager から Destroy できなくなる
-インスタンス名が変わったのが影響していると思われる。手動で以下を行ってください。
-- Cluster Network を TERMINATE
-- Bastion の TERMINATE
-- 必要であれば VCN の削除
