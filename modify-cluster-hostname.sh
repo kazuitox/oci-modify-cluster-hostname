@@ -1,6 +1,7 @@
 #!/bin/sh
 subnet_id=
 compartment_id=
+NEW_HOSTNAME_PREFIX="hpc-node"
 
 test -f ./hostlist  && /bin/rm ./hostlist
 test -f ./hosts.tmp  && /bin/rm ./hosts.tmp
@@ -11,7 +12,6 @@ test -f ./hostfile.tcp  && /bin/rm ./hostfile.tcp
 grep role=compute /etc/ansible/hosts | sed 's/ansible_....=//g' | awk '{print $2","$1}' | sort -V > ./hostlist
 NUM_NODES=`wc -l ./hostlist | awk '{print $1}'`
 HOST_DIGIT=`wc -l hostlist | awk '{print $1}'  | wc -L`
-NEW_HOSTNAME_PREFIX="hpc-node"
 START=`grep -n "\[compute\]" /etc/ansible/hosts | awk -F: '{print $1+1}'`
 END=`grep -n "\[nfs\]" /etc/ansible/hosts | awk -F: '{print $1-1}'`
 cat /etc/ansible/hosts | sed ${START},${END}d > ansible.hosts.tmp
