@@ -1,5 +1,6 @@
 - hosts: compute
-  sudo: yes
+  become: true
+  #sudo: yes
   user: opc
 
   tasks:
