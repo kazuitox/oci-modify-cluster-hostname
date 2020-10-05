@@ -51,3 +51,6 @@ subnet_id=
 ```
 ./modify-cluster-hostname.sh
 ```
+
+# 注意
+- 10ノード以上だと不具合あり
