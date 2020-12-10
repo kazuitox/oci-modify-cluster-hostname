@@ -79,7 +79,7 @@ do
  ssh ${IP} sudo mv /var/tmp/hosts /etc/hosts
 
  ssh ${IP} "(umask 166 && touch ~/.ssh/config)"
- ssh ${IP} 'echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config'
+ ssh ${IP} 'echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
 
  for file in hostfile.rdma hostfile.tcp
  do
