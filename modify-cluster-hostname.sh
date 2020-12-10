@@ -27,7 +27,7 @@ fi
 for i in `seq -f %0${DIGIT}g 1 ${NUM_NODES}`
 do
 
- NUMBER=`echo $i | sed 's/0//g'`
+ NUMBER=`echo $i | sed 's/^0*//g'`
  IP=`cat ./hostlist | sed -n  ${NUMBER}p | cut -d , -f 1`
  OLD_HOSTNAME=`cat ./hostlist | sed -n  ${i}p | cut -d , -f 2`
  NEW_HOSTNAME=${NEW_HOSTNAME_PREFIX}-${i}
